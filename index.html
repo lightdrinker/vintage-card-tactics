@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VCT - Vintage Card Tactics</title>
+    <link rel="stylesheet" href="css/style.css?v=3">
+</head>
+<body>
+
+    <!-- 상대 덱 공개 -->
+    <div class="opp-deck-section">
+        <div class="opp-deck-label" onclick="toggleOppDeck()">&#9660; Opponent Deck (click to toggle)</div>
+        <div class="opp-deck" id="opp-deck"></div>
+    </div>
+
+    <!-- 상대 마스터 (상단) -->
+    <div class="master-bar opp-master" id="opp-master">
+        <div class="master-portrait opp-portrait">👹</div>
+        <div class="master-info">
+            <div class="master-name">Opponent</div>
+            <div class="hp-bar-wrap" id="opp-hp-section">
+                <div class="hp-bar-ghost hp-opp" id="opp-hp-ghost" style="width:100%"></div>
+                <div class="hp-bar-fill hp-opp" id="opp-hp-fill" style="width:100%"></div>
+                <div class="hp-text" id="opp-hp-text">10 / 10</div>
+            </div>
+            <div class="master-sub">
+                <span class="mana-info" id="opp-mana">Mana: 0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 라운드 표시 -->
+    <div class="round-bar">
+        <div class="round-info" id="round-info">Round 1 / 5</div>
+    </div>
+
+    <!-- 3레인 보드 -->
+    <div class="board">
+        <div class="lane" id="lane-0">
+            <div class="lane-label">Lane 1</div>
+            <div class="card-slot opp-slot" id="opp-slot-0">?</div>
+            <div class="vs-divider" id="vs-0">VS</div>
+            <div class="card-slot player-slot" id="player-slot-0" onclick="placeCard(0)">Drop here</div>
+            <div class="clash-text" id="clash-text-0"></div>
+        </div>
+        <div class="lane" id="lane-1">
+            <div class="lane-label">Lane 2</div>
+            <div class="card-slot opp-slot" id="opp-slot-1">?</div>
+            <div class="vs-divider" id="vs-1">VS</div>
+            <div class="card-slot player-slot" id="player-slot-1" onclick="placeCard(1)">Drop here</div>
+            <div class="clash-text" id="clash-text-1"></div>
+        </div>
+        <div class="lane" id="lane-2">
+            <div class="lane-label">Lane 3</div>
+            <div class="card-slot opp-slot" id="opp-slot-2">?</div>
+            <div class="vs-divider" id="vs-2">VS</div>
+            <div class="card-slot player-slot" id="player-slot-2" onclick="placeCard(2)">Drop here</div>
+            <div class="clash-text" id="clash-text-2"></div>
+        </div>
+    </div>
+
+    <!-- 내 마스터 (하단) -->
+    <div class="master-bar player-master" id="player-master">
+        <div class="master-portrait player-portrait">🧙</div>
+        <div class="master-info">
+            <div class="master-name">Player</div>
+            <div class="hp-bar-wrap" id="player-hp-section">
+                <div class="hp-bar-ghost hp-player" id="player-hp-ghost" style="width:100%"></div>
+                <div class="hp-bar-fill hp-player" id="player-hp-fill" style="width:100%"></div>
+                <div class="hp-text" id="player-hp-text">10 / 10</div>
+            </div>
+            <div class="master-sub">
+                <span class="mana-info" id="player-mana">Mana: 0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 핸드 -->
+    <div class="hand-section">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="hand-label" id="hand-label">My Cards (15)</div>
+            <div class="dp-info" id="dp-info">DP: 8 / 8</div>
+        </div>
+        <div class="hand" id="player-hand"></div>
+    </div>
+
+    <!-- 컨트롤 -->
+    <div class="controls">
+        <button class="btn-combat" id="btn-combat" onclick="startCombat()">Combat!</button>
+        <button class="btn-reset" onclick="resetPlacements()">Reset</button>
+    </div>
+
+    <!-- 전투 로그 -->
+    <div class="combat-log" id="combat-log"></div>
+
+    <!-- 스킬 선택 오버레이 -->
+    <div class="skill-overlay" id="skill-overlay">
+        <div class="skill-box">
+            <div class="skill-header">
+                <span class="skill-title">⚡ Master Skill</span>
+                <span class="skill-lane-info" id="skill-lane-info">Lane 1 전투 전</span>
+                <span class="skill-mana" id="skill-mana-display">Mana: 0</span>
+            </div>
+            <div class="skill-buttons" id="skill-buttons"></div>
+        </div>
+    </div>
+
+    <!-- 게임 종료 오버레이 -->
+    <div class="result-overlay" id="result-overlay">
+        <div class="result-box">
+            <h2 id="result-text"></h2>
+            <p id="result-detail"></p>
+            <button class="btn-combat" onclick="restartGame()">Play Again</button>
+        </div>
+    </div>
+
+    <!-- 투사체 컨테이너 -->
+    <div id="projectile-container"></div>
+
+    <!-- JS 모듈 (순서 중요) -->
+    <script src="js/utils.js?v=3"></script>
+    <script src="js/data.js?v=3"></script>
+    <script src="js/ui.js?v=3"></script>
+    <script src="js/ai.js?v=3"></script>
+    <script src="js/game.js?v=3"></script>
+    <script src="js/combat.js?v=3"></script>
+    <script>
+        initGame();
+        addLog('--- Round 1 ---', '');
+    </script>
+</body>
+</html>
